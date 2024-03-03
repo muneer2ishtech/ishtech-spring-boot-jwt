@@ -1,4 +1,4 @@
-package fi.ishtech.springboot.jwt.security;
+package fi.ishtech.springboot.auth.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
