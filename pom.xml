@@ -18,6 +18,29 @@
 
 	<name>ishtech-spring-boot-jwt</name>
 	<description>Demo project for Spring Boot Auth using JWT</description>
+
+	<organization>
+		<name>Ishtech</name>
+		<url>https://github.com/ishtech</url>
+	</organization>
+
+	<licenses>
+		<license>
+			<name>Apache License 2.0</name>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Muneer Ahmed Syed</name>
+			<url>https://github.com/muneer2ishtech</url>
+		</developer>
+	</developers>
+
+	<scm>
+		<url>https://github.com/muneer2ishtech/ishtech-spring-boot-jwt</url>
+	</scm>
+
 	<properties>
 		<java.version>21</java.version>
 	</properties>
