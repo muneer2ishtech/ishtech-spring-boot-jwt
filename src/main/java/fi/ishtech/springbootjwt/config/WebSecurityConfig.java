@@ -124,6 +124,7 @@ public class WebSecurityConfig {
 	private List<String> getDefaultPermittedUrls() {
 		// @formatter:off
 		return List.of(
+				"/h2-console/**",
 				"/",
 				"/error"
 		);

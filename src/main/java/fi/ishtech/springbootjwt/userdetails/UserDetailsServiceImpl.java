@@ -33,7 +33,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		User user = (loginByEmail ? userRepo.findOneByEmail(username) : userRepo.findOneByUsername(username))
 				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-
+		log.trace("Found User({}", user.getId());
+		
 		// @formatter:off
 		List<String> userRoleNames = user.getUserRoles() == null ? List.of()
 				: user.getUserRoles()

@@ -6,6 +6,7 @@ import java.util.Base64;
 import org.springframework.data.util.Pair;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 
 import fi.ishtech.springbootjwt.dto.ForgotPasswordDto;
@@ -13,13 +14,21 @@ import fi.ishtech.springbootjwt.dto.SignupDto;
 import fi.ishtech.springbootjwt.dto.UpdatePasswordDto;
 import fi.ishtech.springbootjwt.dto.UserProfileDto;
 import fi.ishtech.springbootjwt.entity.User;
+import fi.ishtech.springbootjwt.mapper.UserProfileMapper;
 import fi.ishtech.springbootjwt.repo.UserRepo;
+import fi.ishtech.springbootjwt.service.UserProfileService;
+import fi.ishtech.springbootjwt.service.UserRoleService;
 import fi.ishtech.springbootjwt.service.UserService;
 import io.jsonwebtoken.lang.Assert;
 import jakarta.transaction.Transactional;
+import jakarta.transaction.Transactional.TxType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ *
+ * @author Muneer Ahmed Syed
+ */
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -29,6 +38,11 @@ public class UserServiceImpl implements UserService {
 
 	private final UserRepo userRepo;
 	private final PasswordEncoder passwordEncoder;
+
+	private final UserProfileService userProfileService;
+	private final UserRoleService userRoleService;
+
+	private final UserProfileMapper userProfileMapper;
 
 	@Override
 	public boolean existsByEmail(String email) {
@@ -40,20 +54,24 @@ public class UserServiceImpl implements UserService {
 		return userRepo.existsByUsername(username);
 	}
 
+	@Transactional(TxType.REQUIRES_NEW)
 	@Override
 	public UserProfileDto create(SignupDto signupDto) {
 		log.debug("New Signup: {}", signupDto.getEmail());
 
-		User user = null; // TODO: dto to entity
+		User user = new User();
+
+		user.setEmail(signupDto.getEmail());
+		user.setUsername(StringUtils.hasText(signupDto.getUsername()) ? signupDto.getUsername() : signupDto.getEmail());
 		user.setPasswordHash(passwordEncoder.encode(signupDto.getPassword()));
+		user.setActive(true);
 
 		user = userRepo.save(user);
 		log.info("New User({}) created for {}", user.getId(), user.getUsername());
 
-		// TODO: default UserRole
-		// TODO: UserProfile
+		userRoleService.createDefaultRoles(user.getId());
 
-		UserProfileDto userProfileDto = null; // TODO to dto
+		UserProfileDto userProfileDto = userProfileService.create(user.getId(), signupDto);
 
 		return userProfileDto;
 	}
@@ -70,7 +88,7 @@ public class UserServiceImpl implements UserService {
 		user = userRepo.save(user);
 		log.info("Password updated for user:{}", user.getId());
 
-		UserProfileDto userProfileDto = null; // TODO to dto
+		UserProfileDto userProfileDto = userProfileMapper.toBriefDto(user.getUserProfile());
 
 		return userProfileDto;
 	}
@@ -89,7 +107,7 @@ public class UserServiceImpl implements UserService {
 		user = userRepo.save(user);
 		log.info("Password updated for user:{}", user.getId());
 
-		UserProfileDto userProfileDto = null; // TODO to dto
+		UserProfileDto userProfileDto = userProfileMapper.toBriefDto(user.getUserProfile());
 
 		return userProfileDto;
 	}
@@ -106,7 +124,7 @@ public class UserServiceImpl implements UserService {
 		user.setForceChangePassword(true);
 		// TODO: should password be jumbled prevent normal login
 
-		UserProfileDto userProfileDto = null; // TODO to dto
+		UserProfileDto userProfileDto = userProfileMapper.toBriefDto(user.getUserProfile());
 
 		return Pair.of(passwordResetToken, userProfileDto);
 	}
