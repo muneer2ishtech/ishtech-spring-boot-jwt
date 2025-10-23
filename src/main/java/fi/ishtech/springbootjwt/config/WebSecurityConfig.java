@@ -1,4 +1,4 @@
-package fi.ishtech.springboot.auth.config;
+package fi.ishtech.springbootjwt.config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import fi.ishtech.springboot.auth.jwt.JwtAuthenticationFilter;
+import fi.ishtech.springbootjwt.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 
 /**

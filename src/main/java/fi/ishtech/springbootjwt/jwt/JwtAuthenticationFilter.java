@@ -1,4 +1,4 @@
-package fi.ishtech.springboot.auth.jwt;
+package fi.ishtech.springbootjwt.jwt;
 
 import java.io.IOException;
 

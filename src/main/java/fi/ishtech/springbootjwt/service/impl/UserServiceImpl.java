@@ -1,4 +1,4 @@
-package fi.ishtech.springboot.auth.service.impl;
+package fi.ishtech.springbootjwt.service.impl;
 
 import java.security.SecureRandom;
 import java.util.Base64;
@@ -8,13 +8,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import fi.ishtech.springboot.auth.dto.ForgotPasswordDto;
-import fi.ishtech.springboot.auth.dto.SignupDto;
-import fi.ishtech.springboot.auth.dto.UpdatePasswordDto;
-import fi.ishtech.springboot.auth.dto.UserProfileDto;
-import fi.ishtech.springboot.auth.entity.User;
-import fi.ishtech.springboot.auth.repo.UserRepo;
-import fi.ishtech.springboot.auth.service.UserService;
+import fi.ishtech.springbootjwt.dto.ForgotPasswordDto;
+import fi.ishtech.springbootjwt.dto.SignupDto;
+import fi.ishtech.springbootjwt.dto.UpdatePasswordDto;
+import fi.ishtech.springbootjwt.dto.UserProfileDto;
+import fi.ishtech.springbootjwt.entity.User;
+import fi.ishtech.springbootjwt.repo.UserRepo;
+import fi.ishtech.springbootjwt.service.UserService;
 import io.jsonwebtoken.lang.Assert;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

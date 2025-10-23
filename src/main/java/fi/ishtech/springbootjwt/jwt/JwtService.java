@@ -1,4 +1,4 @@
-package fi.ishtech.springboot.auth.jwt;
+package fi.ishtech.springbootjwt.jwt;
 
 import java.security.Key;
 import java.util.Date;
@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.NumberUtils;
 
-import fi.ishtech.springboot.auth.userdetails.UserDetailsImpl;
+import fi.ishtech.springbootjwt.userdetails.UserDetailsImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;

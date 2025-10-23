@@ -1,11 +1,11 @@
-package fi.ishtech.springboot.auth.service;
+package fi.ishtech.springbootjwt.service;
 
 import org.springframework.data.util.Pair;
 
-import fi.ishtech.springboot.auth.dto.ForgotPasswordDto;
-import fi.ishtech.springboot.auth.dto.SignupDto;
-import fi.ishtech.springboot.auth.dto.UpdatePasswordDto;
-import fi.ishtech.springboot.auth.dto.UserProfileDto;
+import fi.ishtech.springbootjwt.dto.ForgotPasswordDto;
+import fi.ishtech.springbootjwt.dto.SignupDto;
+import fi.ishtech.springbootjwt.dto.UpdatePasswordDto;
+import fi.ishtech.springbootjwt.dto.UserProfileDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

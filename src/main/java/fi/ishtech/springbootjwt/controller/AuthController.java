@@ -1,4 +1,4 @@
-package fi.ishtech.springboot.auth.controller;
+package fi.ishtech.springbootjwt.controller;
 
 import java.net.URI;
 
@@ -18,15 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import fi.ishtech.springboot.auth.dto.CustomErrorResponse;
-import fi.ishtech.springboot.auth.dto.ForgotPasswordDto;
-import fi.ishtech.springboot.auth.dto.SigninDto;
-import fi.ishtech.springboot.auth.dto.SignupDto;
-import fi.ishtech.springboot.auth.dto.UpdatePasswordDto;
-import fi.ishtech.springboot.auth.dto.UserProfileDto;
-import fi.ishtech.springboot.auth.jwt.JwtResponse;
-import fi.ishtech.springboot.auth.jwt.JwtService;
-import fi.ishtech.springboot.auth.service.UserService;
+import fi.ishtech.springbootjwt.dto.CustomErrorResponse;
+import fi.ishtech.springbootjwt.dto.ForgotPasswordDto;
+import fi.ishtech.springbootjwt.dto.SigninDto;
+import fi.ishtech.springbootjwt.dto.SignupDto;
+import fi.ishtech.springbootjwt.dto.UpdatePasswordDto;
+import fi.ishtech.springbootjwt.dto.UserProfileDto;
+import fi.ishtech.springbootjwt.jwt.JwtResponse;
+import fi.ishtech.springbootjwt.jwt.JwtService;
+import fi.ishtech.springbootjwt.service.UserService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

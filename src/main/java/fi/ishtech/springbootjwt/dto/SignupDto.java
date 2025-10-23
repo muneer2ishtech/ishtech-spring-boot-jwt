@@ -1,4 +1,4 @@
-package fi.ishtech.springboot.auth.dto;
+package fi.ishtech.springbootjwt.dto;
 
 import java.io.Serial;
 import java.io.Serializable;

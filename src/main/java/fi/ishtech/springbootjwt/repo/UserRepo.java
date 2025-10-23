@@ -1,4 +1,4 @@
-package fi.ishtech.springboot.auth.repo;
+package fi.ishtech.springbootjwt.repo;
 
 import java.util.Optional;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 
-import fi.ishtech.springboot.auth.entity.User;
+import fi.ishtech.springbootjwt.entity.User;
 
 /**
  * {@link Repository} for entity {@link User}

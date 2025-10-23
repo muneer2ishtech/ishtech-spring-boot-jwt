@@ -1,4 +1,4 @@
-package fi.ishtech.springboot.auth.userdetails;
+package fi.ishtech.springbootjwt.userdetails;
 
 import java.util.Collection;
 import java.util.List;

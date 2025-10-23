@@ -1,4 +1,4 @@
-package fi.ishtech.springboot.auth.userdetails;
+package fi.ishtech.springbootjwt.userdetails;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fi.ishtech.springboot.auth.entity.User;
-import fi.ishtech.springboot.auth.entity.UserRole;
-import fi.ishtech.springboot.auth.repo.UserRepo;
+import fi.ishtech.springbootjwt.entity.User;
+import fi.ishtech.springbootjwt.entity.UserRole;
+import fi.ishtech.springbootjwt.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

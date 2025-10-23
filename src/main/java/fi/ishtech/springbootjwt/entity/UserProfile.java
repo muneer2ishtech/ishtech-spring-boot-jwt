@@ -1,4 +1,4 @@
-package fi.ishtech.springboot.auth.entity;
+package fi.ishtech.springbootjwt.entity;
 
 import java.io.Serial;
 import java.io.Serializable;

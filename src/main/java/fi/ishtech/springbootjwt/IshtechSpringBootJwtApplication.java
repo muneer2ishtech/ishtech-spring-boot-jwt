@@ -1,4 +1,4 @@
-package fi.ishtech.springboot.auth;
+package fi.ishtech.springbootjwt;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
