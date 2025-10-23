@@ -18,7 +18,13 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
 	boolean existsByUsername(String username);
 
+	boolean existsByEmail(String email);
+
 	Optional<User> findOneByUsername(String username);
+
+	Optional<User> findOneByEmail(String email);
+
+	Optional<User> findOneByPasswordResetToken(String token);
 
 	@Query("SELECT u.passwordHash FROM User u WHERE u.id = :userId")
 	String findPasswordHashById(Long userId);

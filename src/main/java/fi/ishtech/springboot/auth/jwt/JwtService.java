@@ -7,9 +7,12 @@ import java.util.function.Function;
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.util.NumberUtils;
 
+import fi.ishtech.springboot.auth.userdetails.UserDetailsImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
@@ -31,19 +34,35 @@ public class JwtService {
 	@Value("${fi.istech.springboot.auth.jwt.issuer:auth.springboot.ishtech.fi}")
 	private String issuer;
 
-	public String generateToken(UserDetails userDetails) {
-		Date iat = new Date();
-		Date exp = new Date(iat.getTime() + jwtExpirationMs);
-		return generateJwtToken(userDetails, iat, exp);
+	@Value("${fi.istech.springboot.auth.login-by-email:true}")
+	private boolean loginByEmail;
+
+	public JwtResponse generateJwtResponse(Authentication authentication) {
+		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+		String jwt = generateJwtToken(userDetails);
+
+		return JwtResponse.of(jwt);
 	}
 
-	private String generateJwtToken(UserDetails userDetails, Date iat, Date exp) {
+	public String generateJwtToken(UserDetails userDetails) {
+		Date iat = new Date();
+		Date exp = new Date(iat.getTime() + jwtExpirationMs);
+		return generateJwtToken((UserDetailsImpl) userDetails, iat, exp);
+	}
+
+	private String generateJwtToken(UserDetailsImpl userDetails, Date iat, Date exp) {
 		// @formatter:off
 		return Jwts.builder()
-				.subject((userDetails.getUsername()))
+				.subject((loginByEmail ? userDetails.getEmail() : userDetails.getUsername()))
 				.issuedAt(iat)
 				.expiration(exp)
 				.issuer(issuer)
+				.claim("userId", userDetails.getId())
+				.claim("email", userDetails.getEmail())
+				.claim("roles", userDetails.getRoleNames())
+				.claim("fullName", userDetails.getFullName())
+				.claim("lang", userDetails.getLang())
 				.signWith(jwtKey())
 				.compact();
 		// @formatter:on
@@ -63,6 +82,29 @@ public class JwtService {
 
 	public String extractUsername(String token) {
 		return extractClaim(token, Claims::getSubject);
+	}
+
+	/**
+	 * Extracts the userId from JWT token.<br>
+	 * Returns null if the claim is missing or blank.<br>
+	 * Throws NumberFormatException if the value is not a valid number.
+	 */
+	public Long extractUserId(String token) {
+		Object userIdObj = extractClaims(token).get("userId");
+		if (userIdObj == null) {
+			return null;
+		}
+
+		if (userIdObj instanceof Number) {
+			return ((Number) userIdObj).longValue();
+		}
+
+		if (userIdObj instanceof String) {
+			return NumberUtils.parseNumber((String) userIdObj, Long.class);
+		}
+
+		throw new NumberFormatException("Invalid userId: " + userIdObj);
+
 	}
 
 	private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {
