@@ -41,14 +41,28 @@ public class SignupDto implements Serializable {
 	@NotBlank
 	private String passwordConfirm;
 
+	/**
+	 * Checks that {@link #password} and {@link #passwordConfirm} are same.
+	 */
 	@AssertTrue(message = "password and passwordConfirm are not matching")
 	@JsonIgnore
-	public boolean isPasswordAndPasswordConfirmMatch() {
+	public boolean validatePasswordAndPasswordConfirmMatch() {
 		return password.equals(passwordConfirm);
 	}
 
-	// TODO: regex to match {a-z}[2]
+	/**
+	 * I18N language code, e.g. {@code en}, {@code fi} etc.
+	 */
 	private String lang;
+
+	/**
+	 * Validates input is I18N language code when present.
+	 */
+	@AssertTrue(message = "lang must be exactly 2 lowercase letters")
+	@JsonIgnore
+	public boolean validateLang() {
+		return lang != null && !lang.isBlank() ? lang.matches("^[a-z]{2}$") : true;
+	}
 
 	@AssertTrue
 	private boolean acceptTermsConditions;

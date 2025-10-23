@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -63,8 +65,8 @@ public class WebSecurityConfig {
 	@Value("${fi.istech.springboot.auth.permit-swagger-urls:false}")
 	private boolean permitSwaggerUrls;
 
+	private final UserDetailsService userDetailsService;
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
-	private final AuthenticationProvider authenticationProvider;
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -77,7 +79,7 @@ public class WebSecurityConfig {
 				.anyRequest().authenticated()
 			)
 			.exceptionHandling(ex -> ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
-			.authenticationProvider(authenticationProvider)
+			.authenticationProvider(authenticationProvider())
 			.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		// @formatter:on
 
@@ -90,12 +92,21 @@ public class WebSecurityConfig {
 	}
 
 	@Bean
+	AuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(userDetailsService);
+		authenticationProvider.setPasswordEncoder(passwordEncoder());
+		return authenticationProvider;
+	}
+	
+	@Bean
 	AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 		return config.getAuthenticationManager();
 	}
 
 	private List<String> getPermittedUrls() {
 		List<String> urls = new ArrayList<>(getDefaultPermittedUrls());
+		
+		urls.addAll(getAuthUrls());
 
 		if (permitSwaggerUrls) {
 			urls.addAll(getSwaggerUrls());
@@ -111,6 +122,15 @@ public class WebSecurityConfig {
 	}
 
 	private List<String> getDefaultPermittedUrls() {
+		// @formatter:off
+		return List.of(
+				"/",
+				"/error"
+		);
+		// @formatter:on
+	}
+
+	private List<String> getAuthUrls() {
 		// @formatter:off
 		return List.of(
 				"/api/v1/auth/signin",

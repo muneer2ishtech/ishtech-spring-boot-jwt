@@ -65,10 +65,11 @@ public class AuthController {
 	// @formatter:on
 	@PostMapping("/signin")
 	public ResponseEntity<?> signin(@Valid @RequestBody SigninDto signinDto) {
-		log.debug("Sigin request for {}", signinDto.getUsername());
+		String username = loginByEmail ? signinDto.getEmail() : signinDto.getUsername();
+		log.debug("Signin request for {}", username);
 
 		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(signinDto.getUsername(), signinDto.getPassword()));
+				new UsernamePasswordAuthenticationToken(username, signinDto.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
