@@ -18,8 +18,8 @@
 |---------|-----------------|-------|------------------------------|-------------|
 | API Doc | OpenAPI         | GET   | /v3/api-docs                 | Swagger generated API Documentation                 |
 | API Doc | Swagger         | GET   | /swagger-ui.html             | Swagger Documentation Home                          |
-| Auth    | Signin          | GET   | /api/v1/auth/sigin           | Authenticate user with password and returns JWT     |
-| Auth    | Signup          | GET   | /api/v1/auth/sigup           | Registers new user                                  |
+| Auth    | Signin          | GET   | /api/v1/auth/signin          | Authenticate user with password and returns JWT     |
+| Auth    | Signup          | GET   | /api/v1/auth/signup          | Registers new user                                  |
 | Auth    | Update Password | GET   | /api/v1/auth/update-password | Updates password after signing in                   |
 | Auth    | Forgot Password | GET   | /api/v1/auth/forgot-password | Creates and sends reset password link               |
 | Auth    | Update Password using Reset Token| GET   | /api/v1/auth/reset-password | Sets new password using reset token |
@@ -30,72 +30,47 @@
 - If running on different server or port change their values in URL
 
 
-# Build & Run
-
-## Test
-### JUnit Test
-- If required change values in `src/test/resources/application.properties` 
-- or pass as CLI parameters as below
-    - You can pass multiple params `-Dprop1=val1 -Dprop2=val2` etc.
-
-```
-mvn test -Dprop1=val1
-```
-
-- To run single test with CLI params
-
-
-```
-mvn test -Dtest=fi.ishtech.springboot.controller.HomeControllerTest#testHome
-```
+## Build & Run
 
 ### Local Build
-### Build using Maven
+
+#### Build using Maven
 - You can make build with or without running tests
 
 ```
 mvn clean package -DskipTests=true
 ```
 
-### Docker build
-```
-docker build -f Dockerfile . -t muneer2ishtech/ishtech_spring_boot_jwt:0.0.1-SNAPSHOT
-```
-
-### To get source code and javadoc of dependencies
-```
-mvn dependency:sources
-mvn dependency:resolve -Dclassifier=javadoc
-```
-
-## Local Run
-### Run using Maven
-
-- You can override AWS config properties using CLI params as below
-    - AWS secretKey is must
+#### To get source code and javadoc of dependencies
 
 ```
-mvn spring-boot:run
-```
+mvn dependency:resolve -Dclassifier=sources;javadoc
 
-### Run using Jar
-```
-java -jar ishtech-spring-boot-jwt-0.0.1-SNAPSHOT.jar
-```
-
-## Docker Run
-### Pull image
-```
-docker pull muneer2ishtech/ishtech_spring_boot_jwt:0.0.1-SNAPSHOT
-```
-
-### Run using already built / pulled Docker image
-```
-docker run -it muneer2ishtech/ishtech_spring_boot_jwt:0.0.1-SNAPSHOT
-```
-
-## cURL
+mvn dependency:tree
 
 ```
-curl --request GET --location 'http://localhost:8080/'
+
+
+#### Docker build
+
+```
+docker build \
+  --build-arg APP_VERSION=0.3.0-SNAPSHOT \
+  --build-arg SERVER_PORT=8080 \
+  -t ishtech-spring-boot-jwt-web:0.3.0-SNAPSHOT .
+```
+
+### Local Run
+
+#### Run using Maven
+
+```
+./mvnw -pl ishtech-spring-boot-jwt-web spring-boot:run
+```
+
+#### Docker Run
+
+
+```
+ docker run -p 8080:8080 ishtech-spring-boot-jwt-web:0.3.0-SNAPSHOT
 ```
