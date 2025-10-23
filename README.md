@@ -5,11 +5,11 @@
 - spring-boot - 3.5.7
 
 
-## Parent project
+## Project structure
 
-[ishtech-spring-boot-jwt](https://github.com/muneer2ishtech/ishtech-spring-boot-jwt) - [README](https://github.com/muneer2ishtech/ishtech-spring-boot-jwt/blob/main/README.md)
-├── [ishtech-spring-boot-jwt-lib](https://github.com/muneer2ishtech/ishtech-spring-boot-jwt/tree/main/ishtech-spring-boot-jwt-lib) - [README](https://github.com/muneer2ishtech/ishtech-spring-boot-jwt/blob/dev/ishtech-spring-boot-jwt-lib/README.md)
-└── [ishtech-spring-boot-jwt-web](https://github.com/muneer2ishtech/ishtech-spring-boot-jwt/tree/main/ishtech-spring-boot-jwt-lib) - [README](https://github.com/muneer2ishtech/ishtech-spring-boot-jwt/blob/dev/ishtech-spring-boot-jwt-lib/README.md)
+[ishtech-spring-boot-jwt](https://github.com/muneer2ishtech/ishtech-spring-boot-jwt) - [README](https://github.com/muneer2ishtech/ishtech-spring-boot-jwt/blob/main/README.md)<br>
+├── [ishtech-spring-boot-jwt-lib](https://github.com/muneer2ishtech/ishtech-spring-boot-jwt/tree/main/ishtech-spring-boot-jwt-lib) - [README](https://github.com/muneer2ishtech/ishtech-spring-boot-jwt/blob/dev/ishtech-spring-boot-jwt-lib/README.md)<br>
+└── [ishtech-spring-boot-jwt-web](https://github.com/muneer2ishtech/ishtech-spring-boot-jwt/tree/main/ishtech-spring-boot-jwt-web) - [README](https://github.com/muneer2ishtech/ishtech-spring-boot-jwt/blob/dev/ishtech-spring-boot-jwt-web/README.md)<br>
 
 
 ## APIs
