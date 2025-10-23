@@ -1,9 +1,18 @@
-FROM openjdk:21
+# ====== Stage 1: Build ======
+FROM eclipse-temurin:25-jdk AS build
 
-ENV FI_ISTECH_FILES_LOCAL_ROOT-FOLDER=/tmp
+COPY . .
 
-EXPOSE 8080
+RUN ./mvnw clean install -DskipTests=true
 
-COPY target/ishtech-spring-boot-jwt-0.0.1-SNAPSHOT.jar ishtech-spring-boot-jwt.jar
+# ====== Stage 2: Runtime ======
+FROM eclipse-temurin:25-jre
 
-ENTRYPOINT ["java","-jar","/ishtech-spring-boot-jwt.jar"]
+ARG APP_VERSION=0.3.0-SNAPSHOT
+ARG SERVER_PORT=8080
+
+EXPOSE ${SERVER_PORT}
+
+COPY --from=build ishtech-spring-boot-jwt-web/target/ishtech-spring-boot-jwt-web-${APP_VERSION}.jar ishtech-spring-boot-jwt-web.jar
+
+ENTRYPOINT ["java", "-jar", "ishtech-spring-boot-jwt-web.jar"]
