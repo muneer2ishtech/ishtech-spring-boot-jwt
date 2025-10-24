@@ -37,6 +37,7 @@ GRANT CONNECT ON DATABASE ishtech_dev_db TO ishtech_dev_auth_flyway_user;
 CREATE SCHEMA ishtech_dev_auth_schema;
 CREATE SCHEMA ishtech_dev_auth_aud_schema;
 
+-- ===== App User =====
 GRANT USAGE ON SCHEMA public                      TO ishtech_dev_auth_user;
 GRANT USAGE ON SCHEMA ishtech_dev_auth_schema     TO ishtech_dev_auth_user;
 GRANT USAGE ON SCHEMA ishtech_dev_auth_aud_schema TO ishtech_dev_auth_user;
@@ -44,10 +45,18 @@ GRANT USAGE ON SCHEMA ishtech_dev_auth_aud_schema TO ishtech_dev_auth_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA ishtech_dev_auth_schema     TO ishtech_dev_auth_user;
 GRANT SELECT, INSERT                 ON ALL TABLES IN SCHEMA ishtech_dev_auth_aud_schema TO ishtech_dev_auth_user;
 
--- Note: Future tables to inherit same privileges
-ALTER DEFAULT PRIVILEGES IN SCHEMA ishtech_dev_auth_schema     GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO ishtech_dev_auth_user;
-ALTER DEFAULT PRIVILEGES IN SCHEMA ishtech_dev_auth_aud_schema GRANT SELECT, INSERT                 ON TABLES TO ishtech_dev_auth_user;
+-- Sequences (needed for SERIAL/BIGSERIAL autoincrement IDs)
+GRANT USAGE, SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA ishtech_dev_auth_schema     TO ishtech_dev_auth_user;
+GRANT USAGE, SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA ishtech_dev_auth_aud_schema TO ishtech_dev_auth_user;
 
+-- Default privileges for future tables/sequences
+ALTER DEFAULT PRIVILEGES IN SCHEMA ishtech_dev_auth_schema     GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO ishtech_dev_auth_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA ishtech_dev_auth_aud_schema GRANT SELECT, INSERT ON TABLES TO ishtech_dev_auth_user;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA ishtech_dev_auth_schema     GRANT USAGE, SELECT, UPDATE ON SEQUENCES TO ishtech_dev_auth_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA ishtech_dev_auth_aud_schema GRANT USAGE, SELECT, UPDATE ON SEQUENCES TO ishtech_dev_auth_user;
+
+-- ===== Flyway User =====
 GRANT USAGE         ON SCHEMA public                      TO ishtech_dev_auth_flyway_user;
 GRANT USAGE, CREATE ON SCHEMA ishtech_dev_auth_schema     TO ishtech_dev_auth_flyway_user;
 GRANT USAGE, CREATE ON SCHEMA ishtech_dev_auth_aud_schema TO ishtech_dev_auth_flyway_user;
@@ -55,8 +64,15 @@ GRANT USAGE, CREATE ON SCHEMA ishtech_dev_auth_aud_schema TO ishtech_dev_auth_fl
 GRANT SELECT ON ALL TABLES IN SCHEMA ishtech_dev_auth_schema     TO ishtech_dev_auth_flyway_user;
 GRANT SELECT ON ALL TABLES IN SCHEMA ishtech_dev_auth_aud_schema TO ishtech_dev_auth_flyway_user;
 
+-- Sequences (for migrations that read/write IDs)
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA ishtech_dev_auth_schema     TO ishtech_dev_auth_flyway_user;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA ishtech_dev_auth_aud_schema TO ishtech_dev_auth_flyway_user;
+
 ALTER DEFAULT PRIVILEGES IN SCHEMA ishtech_dev_auth_schema     GRANT SELECT ON TABLES TO ishtech_dev_auth_flyway_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA ishtech_dev_auth_aud_schema GRANT SELECT ON TABLES TO ishtech_dev_auth_flyway_user;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA ishtech_dev_auth_schema     GRANT USAGE, SELECT ON SEQUENCES TO ishtech_dev_auth_flyway_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA ishtech_dev_auth_aud_schema GRANT USAGE, SELECT ON SEQUENCES TO ishtech_dev_auth_flyway_user;
 
 -- NOTE: DROP, INSERT, UPDATE, DELETE for Flyway can be added later if needed
 
