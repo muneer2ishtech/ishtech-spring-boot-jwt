@@ -19,11 +19,15 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
 public class JwtService {
+
+	private static final String STR_AUTHERIZATION = "Authorization";
+	private static final String STR_BEARER = "Bearer ";
 
 	@Value("${fi.ishtech.springbootjwt.jwt.secret}")
 	private String jwtSecret;
@@ -105,6 +109,22 @@ public class JwtService {
 
 		throw new NumberFormatException("Invalid userId: " + userIdObj);
 
+	}
+
+	public Long extractUserIdFromRequest(final HttpServletRequest request) {
+		return extractUserId(extractJwtFromRequest(request));
+	}
+
+	public String extractJwtFromRequest(final HttpServletRequest request) {
+		return extractJwtFromRequestHeader(request.getHeader(STR_AUTHERIZATION));
+	}
+
+	private String extractJwtFromRequestHeader(final String authHeader) {
+		if (authHeader != null && authHeader.startsWith(STR_BEARER)) {
+			return authHeader.substring(7);
+		}
+
+		return null;
 	}
 
 	private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {
