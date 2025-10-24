@@ -1,6 +1,6 @@
 # ishtech-spring-boot-jwt
 
-## Versions
+## Tech stack
 - java - 25
 - spring-boot - 3.5.7
 
@@ -65,7 +65,7 @@ docker build \
 #### Run using Maven
 
 ```
-./mvnw -pl ishtech-spring-boot-jwt-web spring-boot:run
+./mvnw -pl ishtech-spring-boot-jwt-web spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
 #### Docker Run
