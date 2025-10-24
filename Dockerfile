@@ -8,7 +8,7 @@ RUN ./mvnw clean install -DskipTests=true
 # ====== Stage 2: Runtime ======
 FROM eclipse-temurin:25-jre
 
-ARG APP_VERSION=0.3.0
+ARG APP_VERSION=0.4.0-SNAPSHOT
 ARG SERVER_PORT=8080
 
 EXPOSE ${SERVER_PORT}
