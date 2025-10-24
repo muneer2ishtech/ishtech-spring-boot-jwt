@@ -130,7 +130,7 @@ public class AuthController {
 			@ApiResponse(responseCode = "200", description = "OK")
 	})
 	// @formatter:on
-	@PostMapping(path = "/reset-password", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(path = "/reset-password", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> updatePasswordByToken(@Valid @RequestBody UpdatePasswordDto updatePasswordDto) {
 		log.debug("Rest to new password request");
 		Assert.hasText(updatePasswordDto.getToken(), "Token is mandatory");
