@@ -97,7 +97,7 @@ public class WebSecurityConfig {
 		authenticationProvider.setPasswordEncoder(passwordEncoder());
 		return authenticationProvider;
 	}
-	
+
 	@Bean
 	AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 		return config.getAuthenticationManager();
@@ -105,7 +105,7 @@ public class WebSecurityConfig {
 
 	private List<String> getPermittedUrls() {
 		List<String> urls = new ArrayList<>(getDefaultPermittedUrls());
-		
+
 		urls.addAll(getAuthUrls());
 
 		if (permitSwaggerUrls) {
