@@ -33,7 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		User user = (loginByEmail ? userRepo.findOneByEmail(username) : userRepo.findOneByUsername(username))
 				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-		log.trace("Found User({}", user.getId());
+		log.trace("Found User({})", user.getId());
 		
 		// @formatter:off
 		List<String> userRoleNames = user.getUserRoles() == null ? List.of()
@@ -43,12 +43,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 						.map(UserRole::getRoleName)
 						.toList();
 		// @formatter:on
+		log.trace("For User({}) userRoleNames:{}", user.getId(), userRoleNames);
 
 		var userProfile = user.getUserProfile();
+		log.trace("For User({}) found UserProfile:{}", user.getId(), userProfile == null ? null : userProfile.getId());
 
 		// @formatter:off
 		return UserDetailsImpl.of(user.getId(), user.getUsername(), user.getEmail(), user.getPasswordHash(),
-				!user.isActive(), userRoleNames,
+				user.isActive(), userRoleNames,
 				userProfile == null ? null : userProfile.getFullName(),
 				userProfile == null ? null : userProfile.getDefaultLang());
 		// @formatter:on

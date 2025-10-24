@@ -38,6 +38,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 			UserRole userRole = new UserRole();
 			userRole.setUserId(userId);
 			userRole.setRoleName(roleName);
+			userRole.setActive(true);
 			return userRole;
 		}).toList();
 
