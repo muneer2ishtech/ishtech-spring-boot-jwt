@@ -14,7 +14,7 @@
 
 	<groupId>fi.ishtech.practice</groupId>
 	<artifactId>ishtech-spring-boot-jwt</artifactId>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>0.3.0</version>
 	<packaging>pom</packaging>
 
 	<name>ishtech-spring-boot-jwt</name>
