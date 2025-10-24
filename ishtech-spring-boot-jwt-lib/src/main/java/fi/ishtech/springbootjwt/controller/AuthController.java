@@ -148,9 +148,10 @@ public class AuthController {
 			@ApiResponse(responseCode = "200", description = "OK")
 	})
 	// @formatter:on
-	@PostMapping(path = "/update-password", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> updatePassword(@Valid @RequestBody UpdatePasswordDto updatePasswordDto) {
-		Long userId = null; // TODO: from jwt
+	@PutMapping(path = "/update-password", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Void> updatePassword(@Valid @RequestBody UpdatePasswordDto updatePasswordDto,
+			HttpServletRequest request) {
+		Long userId = jwtService.extractUserIdFromRequest(request);
 		log.debug("Update password request for {}", userId);
 
 		// TODO: recaptcha
