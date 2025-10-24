@@ -31,7 +31,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 	@Transactional(TxType.MANDATORY)
 	@Override
 	public UserProfileDto create(Long userId, SignupDto signupDto) {
-		log.debug("Creating new UserProfile for {}", userId);
+		log.debug("Creating new UserProfile for User({})", userId);
 
 		UserProfile userProfile = userProfileMapper.toNewEntity(signupDto);
 		userProfile.setId(userId);

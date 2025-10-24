@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserProfileDto updatePassword(Long userId, UpdatePasswordDto updatePasswordDto) {
-		log.debug("Update password request for {}", userId);
+		log.debug("Update password request for User({})", userId);
 
 		User user = userRepo.findById(userId).orElseThrow();
 
@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
 		user.setPasswordResetToken(null); // TODO: effect of DynamicUpdate
 
 		user = userRepo.save(user);
-		log.info("Password updated for user:{}", user.getId());
+		log.info("Password updated for User({})", user.getId());
 
 		UserProfileDto userProfileDto = userProfileMapper.toBriefDto(user.getUserProfile());
 
@@ -98,14 +98,14 @@ public class UserServiceImpl implements UserService {
 		Assert.hasText(updatePasswordDto.getToken(), "Token is mandatory");
 
 		User user = userRepo.findOneByPasswordResetToken(updatePasswordDto.getToken()).orElseThrow();
-		log.debug("Update password request for {}", user.getId());
+		log.debug("Update password request for User({})", user.getId());
 
 		user.setPasswordHash(passwordEncoder.encode(updatePasswordDto.getPassword()));
 		user.setPasswordResetToken(null); // TODO: effect of DynamicUpdate
 		user.setForceChangePassword(false);
 
 		user = userRepo.save(user);
-		log.info("Password updated for user:{}", user.getId());
+		log.info("Password updated for User({})", user.getId());
 
 		UserProfileDto userProfileDto = userProfileMapper.toBriefDto(user.getUserProfile());
 
@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService {
 		log.debug("PasswordResetToken request for: {}", forgotPasswordDto.getEmail());
 
 		User user = userRepo.findOneByEmail(forgotPasswordDto.getEmail()).orElseThrow();
-		log.debug("PasswordResetToken request for {}", user.getId());
+		log.debug("PasswordResetToken request for User({})", user.getId());
 
 		String passwordResetToken = generateRandomToken();
 		user.setPasswordResetToken(passwordResetToken);

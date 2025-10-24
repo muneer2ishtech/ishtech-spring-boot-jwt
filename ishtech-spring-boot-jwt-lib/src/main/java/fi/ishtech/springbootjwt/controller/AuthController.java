@@ -154,7 +154,7 @@ public class AuthController {
 	public ResponseEntity<Void> updatePassword(@Valid @RequestBody UpdatePasswordDto updatePasswordDto,
 			HttpServletRequest request) {
 		Long userId = jwtService.extractUserIdFromRequest(request);
-		log.debug("Update password request for {}", userId);
+		log.debug("Update password request for User({})", userId);
 
 		// TODO: recaptcha
 
