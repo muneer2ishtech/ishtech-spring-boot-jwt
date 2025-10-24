@@ -70,8 +70,8 @@ public class AuthController {
 		String username = loginByEmail ? signinDto.getEmail() : signinDto.getUsername();
 		log.debug("Signin request for {}", username);
 
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(username, signinDto.getPassword()));
+		Authentication authentication = authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(username, signinDto.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -97,7 +97,7 @@ public class AuthController {
 
 		UserProfileDto userProfileDto = userService.create(signupDto);
 
-		// TODO: send verification email
+		// TODO: send verification/welcome email
 
 		// @formatter:off
 		URI uri = ServletUriComponentsBuilder
@@ -121,6 +121,7 @@ public class AuthController {
 
 		// TODO: recaptcha
 
+		@SuppressWarnings("unused")
 		Pair<String, UserProfileDto> pair = userService.generatePasswordResetToken(forgotPasswordDto);
 		// emailService.sendResetPasswordLink(pair.getFirst(), pair.getSecond());
 
@@ -139,6 +140,7 @@ public class AuthController {
 
 		// TODO: recaptcha
 
+		@SuppressWarnings("unused")
 		UserProfileDto userProfileDto = userService.updatePasswordByToken(updatePasswordDto);
 		// emailService.notifyPasswordUpdated(userProfileDto);
 
@@ -158,6 +160,7 @@ public class AuthController {
 
 		// TODO: recaptcha
 
+		@SuppressWarnings("unused")
 		UserProfileDto userProfileDto = userService.updatePassword(userId, updatePasswordDto);
 		// emailService.notifyPasswordUpdated(userProfileDto);
 

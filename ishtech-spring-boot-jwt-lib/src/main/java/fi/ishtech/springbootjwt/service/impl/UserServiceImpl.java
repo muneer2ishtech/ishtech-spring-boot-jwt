@@ -83,7 +83,8 @@ public class UserServiceImpl implements UserService {
 		User user = userRepo.findById(userId).orElseThrow();
 
 		user.setPasswordHash(passwordEncoder.encode(updatePasswordDto.getPassword()));
-		user.setPasswordResetToken(null); // TODO: effect of DynamicUpdate
+		user.setPasswordResetToken(null);
+		user.setForceChangePassword(false);
 
 		user = userRepo.save(user);
 		log.info("Password updated for User({})", user.getId());
@@ -101,7 +102,7 @@ public class UserServiceImpl implements UserService {
 		log.debug("Update password request for User({})", user.getId());
 
 		user.setPasswordHash(passwordEncoder.encode(updatePasswordDto.getPassword()));
-		user.setPasswordResetToken(null); // TODO: effect of DynamicUpdate
+		user.setPasswordResetToken(null);
 		user.setForceChangePassword(false);
 
 		user = userRepo.save(user);
