@@ -32,7 +32,7 @@ public class UserProfile implements Serializable {
 	private static final long serialVersionUID = -6549501435122538676L;
 
 	@Id
-	@Column(name = "id", nullable = false, insertable = true, updatable = false)
+	@Column(name = "id", nullable = false, insertable = true, updatable = false, columnDefinition = "INT")
 	private Long id;
 
 	@Column(name = "first_name", nullable = false, insertable = true, updatable = true)
