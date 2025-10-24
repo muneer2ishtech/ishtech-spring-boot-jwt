@@ -55,10 +55,11 @@ mvn dependency:tree
 
 ```
 docker build \
-  --build-arg APP_VERSION=0.3.0-SNAPSHOT \
+  --build-arg APP_VERSION=x.y.z \
   --build-arg SERVER_PORT=8080 \
-  -t ishtech-spring-boot-jwt-web:0.3.0-SNAPSHOT .
+  -t ishtech-spring-boot-jwt-web:x.y.z .
 ```
+- Note: Replace `x.y.z` with appropriate version number, e.g. `1.0.0` or `1.1.0-SNAPSHOT`
 
 ### Local Run
 
@@ -72,5 +73,5 @@ docker build \
 
 
 ```
- docker run -p 8080:8080 ishtech-spring-boot-jwt-web:0.3.0-SNAPSHOT
+ docker run -p 8080:8080 ishtech-spring-boot-jwt-web:x.y.z
 ```

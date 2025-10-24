@@ -28,6 +28,8 @@ To use this library in another project, add:
 <dependency>
     <groupId>fi.ishtech.practice</groupId>
     <artifactId>ishtech-spring-boot-jwt-lib</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
+    <version>x.y.z</version>
 </dependency>
 ```
+
+- Note: Replace `x.y.z` with appropriate version number, e.g. `1.0.0` or `1.1.0-SNAPSHOT`
