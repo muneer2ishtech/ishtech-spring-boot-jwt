@@ -25,13 +25,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JwtService {
 
-	@Value("${fi.istech.springboot.auth.jwt.secret}")
+	@Value("${fi.ishtech.springbootjwt.jwt.secret}")
 	private String jwtSecret;
 
-	@Value("${fi.istech.springboot.auth.jwt.expirition-ms}")
+	@Value("${fi.ishtech.springbootjwt.jwt.expirition-ms}")
 	private Integer jwtExpirationMs;
 
-	@Value("${fi.istech.springboot.auth.jwt.issuer:auth.springboot.ishtech.fi}")
+	@Value("${fi.ishtech.springbootjwt.jwt.issuer:auth.springboot.ishtech.fi}")
 	private String issuer;
 
 	@Value("${fi.istech.springboot.auth.login-by-email:true}")
