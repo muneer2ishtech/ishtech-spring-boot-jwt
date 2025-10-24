@@ -31,7 +31,7 @@ public class JwtService {
 	@Value("${fi.ishtech.springbootjwt.jwt.expirition-ms}")
 	private Integer jwtExpirationMs;
 
-	@Value("${fi.ishtech.springbootjwt.jwt.issuer:auth.springboot.ishtech.fi}")
+	@Value("${fi.ishtech.springbootjwt.jwt.issuer}")
 	private String issuer;
 
 	@Value("${fi.ishtech.springbootjwt.login-by-email:true}")
