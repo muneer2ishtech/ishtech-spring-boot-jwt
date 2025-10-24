@@ -53,7 +53,7 @@ public class User implements Serializable {
 	@ToString.Exclude
 	@JsonIgnore
 	// @NotAudited
-	@Column(nullable = false, updatable = false)
+	@Column(nullable = false, updatable = true)
 	private String passwordHash;
 
 	@EqualsAndHashCode.Exclude

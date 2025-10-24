@@ -124,6 +124,9 @@ public class UserServiceImpl implements UserService {
 		user.setForceChangePassword(true);
 		// TODO: should password be jumbled prevent normal login
 
+		user = userRepo.save(user);
+		log.debug("PasswordResetToken generated for User({})", user.getId());
+
 		UserProfileDto userProfileDto = userProfileMapper.toBriefDto(user.getUserProfile());
 
 		return Pair.of(passwordResetToken, userProfileDto);
