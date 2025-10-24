@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-	@Value("${fi.istech.springboot.auth.login-by-email:true}")
+	@Value("${fi.ishtech.springbootjwt.login-by-email:true}")
 	private boolean loginByEmail;
 
 	private final UserRepo userRepo;

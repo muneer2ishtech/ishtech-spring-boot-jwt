@@ -34,7 +34,7 @@ public class JwtService {
 	@Value("${fi.ishtech.springbootjwt.jwt.issuer:auth.springboot.ishtech.fi}")
 	private String issuer;
 
-	@Value("${fi.istech.springboot.auth.login-by-email:true}")
+	@Value("${fi.ishtech.springbootjwt.login-by-email:true}")
 	private boolean loginByEmail;
 
 	public JwtResponse generateJwtResponse(Authentication authentication) {

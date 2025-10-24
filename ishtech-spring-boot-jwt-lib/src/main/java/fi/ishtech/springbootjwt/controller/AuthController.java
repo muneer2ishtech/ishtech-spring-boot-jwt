@@ -45,7 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AuthController {
 
-	@Value("${fi.istech.springboot.auth.login-by-email:true}")
+	@Value("${fi.ishtech.springbootjwt.login-by-email:true}")
 	private boolean loginByEmail;
 
 	private final AuthenticationManager authenticationManager;

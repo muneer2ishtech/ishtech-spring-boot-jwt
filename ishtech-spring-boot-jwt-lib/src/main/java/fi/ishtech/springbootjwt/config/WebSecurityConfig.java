@@ -41,16 +41,16 @@ public class WebSecurityConfig {
 	 * 
 	 * <pre>
 	 * # none → handled by default
-	 * fi.istech.springboot.auth.permitted-urls=
+	 * fi.ishtech.springbootjwt.permitted-urls=
 	 *
 	 * # one
-	 * fi.istech.springboot.auth.permitted-urls=/first-api
+	 * fi.ishtech.springbootjwt.permitted-urls=/first-api
 	 *
 	 * # multiple (comma-separated)
-	 * fi.istech.springboot.auth.permitted-urls=/first-api,/second-api,/third-api
+	 * fi.ishtech.springbootjwt.permitted-urls=/first-api,/second-api,/third-api
 	 * </pre>
 	 */
-	@Value("${fi.istech.springboot.auth.permitted-urls:}")
+	@Value("${fi.ishtech.springbootjwt.permitted-urls:}")
 	private String[] permittedUrls;
 
 	/**
@@ -59,10 +59,10 @@ public class WebSecurityConfig {
 	 * Default: {@code false}
 	 * 
 	 * <pre>
-	 * fi.istech.springboot.auth.permit-swagger-urls=true
+	 * fi.ishtech.springbootjwt.permit-swagger-urls=true
 	 * </pre>
 	 */
-	@Value("${fi.istech.springboot.auth.permit-swagger-urls:false}")
+	@Value("${fi.ishtech.springbootjwt.permit-swagger-urls:false}")
 	private boolean permitSwaggerUrls;
 
 	private final UserDetailsService userDetailsService;
