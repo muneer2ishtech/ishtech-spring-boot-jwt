@@ -1,5 +1,5 @@
 CREATE TABLE t_user_profile (
-  id           INT          PRIMARY KEY,
+  id           BIGINT       PRIMARY KEY,
   first_name   VARCHAR(255) NOT NULL,
   middle_name  VARCHAR(255)     NULL,
   last_name    VARCHAR(255) NOT NULL,

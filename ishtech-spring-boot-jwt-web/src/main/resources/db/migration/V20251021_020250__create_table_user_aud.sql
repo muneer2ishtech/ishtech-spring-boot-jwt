@@ -1,6 +1,6 @@
 CREATE TABLE ${audit_schema_name}.t_user_aud (
-  id                    INT          NOT NULL,
-  rev                   INT          NOT NULL,
+  id                    BIGINT       NOT NULL,
+  rev                   BIGINT       NOT NULL,
   revtype               SMALLINT     NOT NULL,
   rev_timestamp         TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   username              VARCHAR(255)     NULL,
