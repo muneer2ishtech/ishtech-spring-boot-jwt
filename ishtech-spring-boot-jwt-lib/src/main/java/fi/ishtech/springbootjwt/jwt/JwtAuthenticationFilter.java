@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
@@ -28,7 +29,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		if (SecurityContextHolder.getContext().getAuthentication() == null) {
 			final String jwt = jwtService.extractJwtFromRequest(request);
-			if (jwtService.validateJwtToken(jwt)) {
+
+			if (StringUtils.hasText(jwt) && jwtService.validateJwtToken(jwt)) {
 				String username = jwtService.extractUsername(jwt);
 				UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
