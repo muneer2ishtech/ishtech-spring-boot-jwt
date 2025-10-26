@@ -14,7 +14,7 @@
 
 	<groupId>fi.ishtech.practice</groupId>
 	<artifactId>ishtech-spring-boot-jwt</artifactId>
-	<version>0.3.0</version>
+	<version>0.4.0</version>
 	<packaging>pom</packaging>
 
 	<name>ishtech-spring-boot-jwt</name>
@@ -27,7 +27,8 @@
 
 	<licenses>
 		<license>
-			<name>Apache License 2.0</name>
+			<name>0BSD</name>
+			<url>https://opensource.org/license/0bsd/</url>
 		</license>
 	</licenses>
 
