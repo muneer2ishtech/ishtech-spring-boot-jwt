@@ -21,8 +21,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 import fi.ishtech.springbootjwt.jwt.JwtAuthenticationFilter;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -65,6 +67,35 @@ public class WebSecurityConfig {
 	@Value("${fi.ishtech.springbootjwt.permit-swagger-urls:false}")
 	private boolean permitSwaggerUrls;
 
+	/**
+	 * Comma-separated list of origins allowed for CORS requests.<br>
+	 * Default: empty (no origins allowed).<br>
+	 * Can be set per environment via properties.
+	 *
+	 * Examples:
+	 * 
+	 * <pre>
+	 * fi.ishtech.springbootjwt.cors.allowed-origins=http://localhost:5173
+	 * fi.ishtech.springbootjwt.cors.allowed-origins=https://booksui.ishtech.fi
+	 * </pre>
+	 */
+	@Value("${fi.ishtech.springbootjwt.cors.allowed-origins:}")
+	private String[] corsAllowedOrigins;
+
+	/**
+	 * Comma-separated list of HttpMethod(s) allowed for CORS requests.<br>
+	 * Default: all<br>
+	 */
+	@Value("${fi.ishtech.springbootjwt.cors.allowed-methods:GET,POST,PUT,DELETE,OPTIONS}")
+	private String[] corsAllowedMethods;
+
+	/**
+	 * Comma-separated list of headers allowed for CORS requests.<br>
+	 * Default: all<br>
+	 */
+	@Value("${fi.ishtech.springbootjwt.cors.allowed-headers:*}")
+	private String[] corsAllowedHeaders;
+
 	private final UserDetailsService userDetailsService;
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -74,6 +105,7 @@ public class WebSecurityConfig {
 		http
 			.csrf(csrf -> csrf.disable())
 			.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+			.cors(cors -> cors.configurationSource(this::buildCorsConfiguration))
 			.authorizeHttpRequests(auth -> auth
 				.requestMatchers(getPermittedUrls().toArray(String[]::new)).permitAll()
 				.anyRequest().authenticated()
@@ -162,6 +194,17 @@ public class WebSecurityConfig {
 			"/actuator/info"
 		);
 		// @formatter:on
+	}
+
+	private CorsConfiguration buildCorsConfiguration(HttpServletRequest request) {
+		var corsConfig = new CorsConfiguration();
+
+		corsConfig.setAllowedOrigins(Arrays.asList(corsAllowedOrigins));
+		corsConfig.setAllowedMethods(Arrays.asList(corsAllowedMethods));
+		corsConfig.setAllowedHeaders(Arrays.asList(corsAllowedHeaders));
+		corsConfig.setAllowCredentials(true);
+
+		return corsConfig;
 	}
 
 }
