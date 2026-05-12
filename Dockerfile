@@ -1,5 +1,5 @@
 # ====== Stage 1: Build ======
-FROM eclipse-temurin:21-jdk AS build
+FROM eclipse-temurin:25-jdk AS build
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ RUN echo $(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout 2>
 RUN ./mvnw $MAVEN_CLI_OPTS clean install -DskipTests=true
 
 # ====== Stage 2: Runtime ======
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:25-jre
 
 WORKDIR /app
 
