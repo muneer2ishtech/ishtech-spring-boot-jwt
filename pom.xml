@@ -59,8 +59,6 @@
 
 		<springdoc.version>3.0.3</springdoc.version>
 
-		<tomcat.version>11.0.21</tomcat.version>
-
 		<maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
 		<central-publishing-maven-plugin.version>0.10.0</central-publishing-maven-plugin.version>
 	</properties>
