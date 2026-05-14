@@ -42,11 +42,54 @@ This is the **runnable module** — it exposes REST APIs for authentication and 
 
 ```
 docker build . \
-  --build-arg SERVER_PORT=8181 \
-  --build-arg APP_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout 2>/dev/null) \
-  -t "ishtech-springboot-jwtauth-web:$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout 2>/dev/null)"
+  -t "muneer2ishtech/ishtech-springboot-jwtauth-web:$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout 2>/dev/null)"
 
 ```
+
+- With custom `SERVER_PORT`
+
+```
+docker build . \
+  --build-arg SERVER_PORT=8181 \
+  --build-arg APP_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout 2>/dev/null) \
+  -t "muneer2ishtech/ishtech-springboot-jwtauth-web:$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout 2>/dev/null)"
+
+```
+
+#### Run with docker image
+
+- Note: check and use version from pom.xml
+- Add option ` -d` if you want to run in background
+
+
+- To run on default port and other default settings  
+  - E.g.: Default port: `8080`
+
+```
+docker run \
+  muneer2ishtech/ishtech-springboot-jwtauth-web:x.y.z
+```
+
+- To run by exposing on a different port  
+  - Example: expose on `8282` (container still runs on `8080`)
+
+```
+docker run \
+  -p 8282:8080
+  muneer2ishtech/ishtech-springboot-jwtauth-web:x.y.z
+```
+
+- To run with custom application port inside container  
+  - E.g.: Spring Boot runs on `8181`, exposed on `8282`
+
+```
+docker run \
+  -p 8282:8181
+  -e SERVER_PORT=8181
+  muneer2ishtech/ishtech-springboot-jwtauth-web:x.y.z
+```
+
+
 #### Run with docker compose
 
 - Docker compose is self contained and has both spring-boot application and mariadb is present, so  you don't need anything else other than docker
@@ -65,7 +108,7 @@ docker build . \
         - `SERVER_PORT_LOCAL` if skipped spring-boot app will be exposed on default `8080`
 
 ```
-SERVER_PORT_LOCAL=8181 DB_PORT=25432 APP_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout 2>/dev/null) \
+SERVER_PORT_LOCAL=8181 DB_PORT=25432 \
 docker compose up --build
 
 ```
