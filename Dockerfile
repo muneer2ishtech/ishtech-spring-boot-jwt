@@ -23,6 +23,7 @@ RUN export APP_VERSION=$(cat .projectVersion)
 
 ARG SERVER_PORT=8080
 #ENV SERVER_PORT=${SERVER_PORT}
+
 EXPOSE ${SERVER_PORT:-8080}
 
 COPY --from=build /app/ishtech-springboot-jwtauth-web/target/ishtech-springboot-jwtauth-web-${APP_VERSION-*}.jar ishtech-springboot-jwtauth-web.jar
