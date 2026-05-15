@@ -41,6 +41,8 @@ Spring Boot Auth using JWT - parent project
 - For details you can see swagger documentation
     - [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
     - [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
+    - [http://localhost:8080/v3/api-docs.yaml](http://localhost:8080/v3//v3/api-docs.yaml)
+
 - Note: Check and update URI and PORT on which application is running
 
 - For API names and descriptions:
