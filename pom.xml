@@ -14,7 +14,7 @@
 
 	<groupId>fi.ishtech.springboot</groupId>
 	<artifactId>ishtech-springboot-jwtauth</artifactId>
-	<version>3.0.0</version>
+	<version>3.1.0</version>
 	<packaging>pom</packaging>
 
 	<name>ishtech-springboot-jwtauth</name>
@@ -51,11 +51,12 @@
 	<properties>
 		<java.version>25</java.version>
 
-		<ishtech-base-jpa.version>5.0.0</ishtech-base-jpa.version>
-		<ishtech-i18n.version>5.0.0</ishtech-i18n.version>
+		<ishtech-base-jpa.version>5.1.0</ishtech-base-jpa.version>
+		<ishtech-i18n.version>5.1.0</ishtech-i18n.version>
 
 		<jjwt.version>0.13.0</jjwt.version>
 		<mapstruct.version>1.6.3</mapstruct.version>
+		<mockito.version>5.23.0</mockito.version>
 
 		<springdoc.version>3.0.3</springdoc.version>
 

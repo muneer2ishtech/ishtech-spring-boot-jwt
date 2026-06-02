@@ -74,10 +74,7 @@ jobs:
               exit 1
             fi
 
-            # clean optional v prefix
-            CLEAN_TAG="${RELEASE_TAG#v}"
-
-            if [[ "$CLEAN_TAG" != "$APP_VERSION" ]]; then
+            if [[ "${RELEASE_TAG#v}" != "$APP_VERSION" ]]; then
               echo "❌ ERROR: Tag ($RELEASE_TAG) does NOT match pom version ($APP_VERSION)"
               exit 1
             fi
