@@ -82,8 +82,8 @@ curl --request POST --location 'http://localhost:8080/api/v1/auth/signup' \
 
 ```json
 {
-    "tokenType": "Bearer",
-    "accessToken": "eyJhbGciOiJIUzI1NiJ9"
+    "token_type": "Bearer",
+    "access_token": "eyJhbGciOiJIUzI1NiJ9"
 }
 ```
 
@@ -156,6 +156,57 @@ curl --request PUT --location 'http://localhost:8080/api/v1/auth/update-password
 
 # User APIs
 
+## Get Users
+
+### Request Details
+- URL: `/api/v1/users/`
+- HTTP Method: `GET`
+
+### Response Details
+- HTTP Response Code: `200 - OK`
+- HTTP Response Code: `403 - Forbidden`
+    - Returned if authenticated user does not match requested `userId`
+- HTTP Response Code: `401 - Unauthorized`
+    - Returned for invalid or missing JWT token
+
+### Response JSON
+
+```json
+{
+  "content": [
+    ...
+  ],
+  "empty": false,
+  "first": true,
+  "last": true,
+  "number": 0,
+  "numberOfElements": 20,
+  "pageable": {
+    "offset": 0,
+    "pageNumber": 0,
+    "pageSize": 20,
+    "paged": true,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "unpaged": false
+  },
+  "size": 20,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "totalElements": 90,
+  "totalPages": 5
+}
+```
+
+- Content is array of UserProfile data, as in response of [Get User Details](#get-user-details)
+
+
 ## Get User Details
 
 ### Request Details
@@ -171,7 +222,7 @@ curl --request PUT --location 'http://localhost:8080/api/v1/auth/update-password
 ### Response Details
 - HTTP Response Code: `200 - OK`
 - HTTP Response Code: `403 - Forbidden`
-    - Returned if authenticated user does not match requested `userId`
+    - Returned if authenticated user does not have ADMIN role
 - HTTP Response Code: `401 - Unauthorized`
     - Returned for invalid or missing JWT token
 
@@ -199,8 +250,14 @@ curl --request GET --location 'http://localhost:8080/api/v1/users/1' \
 - Request `id` must match authenticated user `id`
 
 ### Request Details
-- URL: `/api/v1/users`
+- URL: `/api/v1/users/{userId}`
 - HTTP Method: `PUT`
+
+#### Path Variables
+
+| Name   | Description |
+|--------|-------------|
+| userId | User ID     |
 
 ### Response Details
 - HTTP Response Code: `200 - OK`
@@ -232,7 +289,7 @@ curl --request GET --location 'http://localhost:8080/api/v1/users/1' \
 ### CURL
 
 ```sh
-curl --request PUT --location 'http://localhost:8080/api/v1/users' \
+curl --request PUT --location 'http://localhost:8080/api/v1/users/1' \
 --header 'Authorization: Bearer <ACCESS_TOKEN>' \
 --header 'Content-Type: application/json' \
 --data-raw '{
