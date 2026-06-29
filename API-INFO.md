@@ -16,9 +16,9 @@
 |--------|-----------------|-------|------------------------------|-------------|
 | Auth   | Signin          | POST  | /api/v1/auth/signin          | Authenticate user with password and returns JWT     |
 | Auth   | Signup          | POST  | /api/v1/auth/signup          | Registers new user                                  |
-| Auth   | Update Password | GET   | /api/v1/auth/update-password | Updates password after signing in                   |
-| Auth   | Forgot Password | GET   | /api/v1/auth/forgot-password | Creates and sends reset password link               |
-| Auth   | Update Password using Reset Token| GET   | /api/v1/auth/reset-password | Sets new password using reset token |
+| Auth   | Update Password | PUT   | /api/v1/auth/update-password | Updates password after signing in                   |
+| Auth   | Forgot Password | PATCH | /api/v1/auth/forgot-password | Creates and sends reset password link               |
+| Auth   | Update Password using Reset Token| PUT   | /api/v1/auth/reset-password | Sets new password using reset token |
 
 
 ## User APIs
