@@ -94,9 +94,9 @@ public class UserController {
 	@PutMapping(path = "/api/v1/users/{userId}",
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	@PreAuthorize("(#userProfileDto.id == null || T(java.lang.Long).valueOf(#userId) == #userProfileDto.id))"
+	@PreAuthorize("(#userProfileDto.id == null || T(java.lang.Long).valueOf(#userId) == #userProfileDto.id)"
 					+ " && (hasAuthority('ROLE_ADMIN') || T(java.lang.Long).valueOf(#userId) == principal.id"
-						+ " || (#userId == 'me' && #userProfileDto.id == principal.id)))")
+						+ " || (#userId == 'me' && #userProfileDto.id == principal.id))")
 	public ResponseEntity<UserProfileDto> updateUserProfile(
 			@Pattern(regexp = "^(me|\\d+)$", message = "Invalid input. Only 'me' or an integer allowed.")
 			@PathVariable("userId") String userId,
