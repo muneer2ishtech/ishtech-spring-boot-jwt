@@ -94,9 +94,13 @@ public class UserController {
 	@PutMapping(path = "/api/v1/users/{userId}",
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	@PreAuthorize("(#userProfileDto.id == null || T(java.lang.Long).valueOf(#userId) == #userProfileDto.id)"
-					+ " && (hasAuthority('ROLE_ADMIN') || T(java.lang.Long).valueOf(#userId) == principal.id"
-						+ " || (#userId == 'me' && #userProfileDto.id == principal.id))")
+	@PreAuthorize(
+		    "('me' == #userId && (#userProfileDto.id == null || #userProfileDto.id == principal.id))"
+		    + " || ("
+		    + "    (hasAuthority('ROLE_ADMIN') || ('me' != #userId && #userId == principal.id.toString()))"
+		    + "    && (#userProfileDto.id == null || #userId == #userProfileDto.id.toString())"
+		    + " )"
+		)
 	public ResponseEntity<UserProfileDto> updateUserProfile(
 			@Pattern(regexp = "^(me|\\d+)$", message = "Invalid input. Only 'me' or an integer allowed.")
 			@PathVariable("userId") String userId,
@@ -109,10 +113,16 @@ public class UserController {
 				loggedInUserId);
 
 		// @formatter:off
-		if ((userProfileDto.getId() == null || userId.equals(userProfileDto.getId().toString()))
-				&& (authInfoService.isAdmin() || userId.equals(loggedInUserId.toString())
-						|| ("me".equalsIgnoreCase(userId) && loggedInUserId.equals(userProfileDto.getId()))
-				)
+		if (
+			// Part 1: User is using "me" in URL
+			("me".equals(userId) && (userProfileDto.getId() == null || userProfileDto.getId().equals(loggedInUserId)))
+			||
+			// Part 2: Admin OR numeric userId matching principal
+			(
+				(authInfoService.isAdmin() || (!"me".equals(userId) && userId.equals(loggedInUserId.toString())))
+				&&
+				(userProfileDto.getId() == null || userId.equals(userProfileDto.getId().toString()))
+			)
 		) {
 		// @formatter:on
 			// ok
