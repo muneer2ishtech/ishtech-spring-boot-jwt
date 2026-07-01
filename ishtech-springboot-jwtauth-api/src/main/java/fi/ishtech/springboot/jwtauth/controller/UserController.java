@@ -87,7 +87,9 @@ public class UserController {
 	/**
 	 * Updates UserProfile by userId or for current user
 	 *
-	 * @param userId user ID or me
+	 * @param userId         user ID or <code>me</code>
+	 * @param userProfileDto {@link UserProfileDto}
+	 *
 	 * @return {@link ResponseEntity}&lt;{@link UserProfileDto}&gt;
 	 */
 	// @formatter:off
@@ -129,9 +131,10 @@ public class UserController {
 			// this is redundant kept here for explanation as Spring-EL in PreAuthorize would take care of it
 		} else {
 			// forbidden
+			// Cannot modify info of other users
 			log.error("URL param: {}, request body param: {}, logged in userId: {} are NOT matching", userId,
 					userProfileDto.getId(), loggedInUserId);
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); // "Cannot modify info of other users"
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 
 		if (userProfileDto.getId() == null) {
@@ -139,6 +142,9 @@ public class UserController {
 		}
 
 		UserProfileDto result = userProfileService.updateAndMapToDto(userProfileDto);
+
+		// TODO: When user is not preset, it is resulting in http status code of 500 instead of 404.
+		// TODO: Handle NoSuchElementException
 
 		return ResponseEntity.ok(result);
 	}
