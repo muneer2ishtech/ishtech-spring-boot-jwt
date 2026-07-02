@@ -31,6 +31,8 @@ touch src/main/resources/db/migration/postgres/V$(date +"%Y%m%d_%H%M%S")__create
 
 ### Change role to admin for an user
 
+- Safe to do below in `START TRANSACTION;` and end with `COMMIT;` or `ROLLBACK;` based on result
+
 ```sql
 UPDATE ishtech_auth_dev_schema.t_user_role SET role_name = 'ADMIN'
   WHERE user_id = (SELECT id FROM ishtech_auth_dev_schema.t_user WHERE email = 'admin@example.com');
