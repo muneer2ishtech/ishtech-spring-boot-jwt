@@ -96,7 +96,7 @@ curl --request POST --location 'http://localhost:8080/api/v1/auth/signup' \
     "exp": 1693840342156,
     "iss": "dev.jwtauth.springboot.ishtech.fi",
     "userId": 1,
-    "scopes": [
+    "roles": [
         "USER"
     ],
     "fullName": "Muneer Syed",
@@ -159,13 +159,13 @@ curl --request PUT --location 'http://localhost:8080/api/v1/auth/update-password
 ## Get Users
 
 ### Request Details
-- URL: `/api/v1/users/`
+- URL: `/api/v1/users`
 - HTTP Method: `GET`
 
 ### Response Details
 - HTTP Response Code: `200 - OK`
 - HTTP Response Code: `403 - Forbidden`
-    - Returned if authenticated user does not match requested `userId`
+    - Returned if authenticated user does not have ADMIN role
 - HTTP Response Code: `401 - Unauthorized`
     - Returned for invalid or missing JWT token
 
@@ -222,7 +222,7 @@ curl --request PUT --location 'http://localhost:8080/api/v1/auth/update-password
 ### Response Details
 - HTTP Response Code: `200 - OK`
 - HTTP Response Code: `403 - Forbidden`
-    - Returned if authenticated user does not have ADMIN role
+    - Returned if authenticated user is not ADMIN or is trying to access another user's profile
 - HTTP Response Code: `401 - Unauthorized`
     - Returned for invalid or missing JWT token
 
@@ -262,7 +262,7 @@ curl --request GET --location 'http://localhost:8080/api/v1/users/1' \
 ### Response Details
 - HTTP Response Code: `200 - OK`
 - HTTP Response Code: `403 - Forbidden`
-    - Returned if request `id` does not match authenticated user
+    - Returned if authenticated user is not ADMIN or is trying to update another user's profile
 - HTTP Response Code: `401 - Unauthorized`
     - Returned for invalid or missing JWT token
 

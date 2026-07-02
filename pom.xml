@@ -14,7 +14,7 @@
 
 	<groupId>fi.ishtech.springboot</groupId>
 	<artifactId>ishtech-springboot-jwtauth</artifactId>
-	<version>3.2.0</version>
+	<version>3.2.1</version>
 	<packaging>pom</packaging>
 
 	<name>ishtech-springboot-jwtauth</name>

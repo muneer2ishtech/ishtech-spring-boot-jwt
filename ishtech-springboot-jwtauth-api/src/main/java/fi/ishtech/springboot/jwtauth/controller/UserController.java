@@ -87,16 +87,22 @@ public class UserController {
 	/**
 	 * Updates UserProfile by userId or for current user
 	 *
-	 * @param userId user ID or me
+	 * @param userId         user ID or <code>me</code>
+	 * @param userProfileDto {@link UserProfileDto}
+	 *
 	 * @return {@link ResponseEntity}&lt;{@link UserProfileDto}&gt;
 	 */
 	// @formatter:off
 	@PutMapping(path = "/api/v1/users/{userId}",
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	@PreAuthorize("(#userProfileDto.id == null || T(java.lang.Long).valueOf(#userId) == #userProfileDto.id)"
-					+ " && (hasAuthority('ROLE_ADMIN') || T(java.lang.Long).valueOf(#userId) == principal.id"
-						+ " || (#userId == 'me' && #userProfileDto.id == principal.id))")
+	@PreAuthorize(
+		    "('me' == #userId && (#userProfileDto.id == null || #userProfileDto.id == principal.id))"
+		    + " || ("
+		    + "    (hasAuthority('ROLE_ADMIN') || ('me' != #userId && #userId == principal.id.toString()))"
+		    + "    && (#userProfileDto.id == null || #userId == #userProfileDto.id.toString())"
+		    + " )"
+		)
 	public ResponseEntity<UserProfileDto> updateUserProfile(
 			@Pattern(regexp = "^(me|\\d+)$", message = "Invalid input. Only 'me' or an integer allowed.")
 			@PathVariable("userId") String userId,
@@ -109,19 +115,26 @@ public class UserController {
 				loggedInUserId);
 
 		// @formatter:off
-		if ((userProfileDto.getId() == null || userId.equals(userProfileDto.getId().toString()))
-				&& (authInfoService.isAdmin() || userId.equals(loggedInUserId.toString())
-						|| ("me".equalsIgnoreCase(userId) && loggedInUserId.equals(userProfileDto.getId()))
-				)
+		if (
+			// Part 1: User is using "me" in URL
+			("me".equals(userId) && (userProfileDto.getId() == null || userProfileDto.getId().equals(loggedInUserId)))
+			||
+			// Part 2: Admin OR numeric userId matching principal
+			(
+				(authInfoService.isAdmin() || (!"me".equals(userId) && userId.equals(loggedInUserId.toString())))
+				&&
+				(userProfileDto.getId() == null || userId.equals(userProfileDto.getId().toString()))
+			)
 		) {
 		// @formatter:on
 			// ok
 			// this is redundant kept here for explanation as Spring-EL in PreAuthorize would take care of it
 		} else {
 			// forbidden
+			// Cannot modify info of other users
 			log.error("URL param: {}, request body param: {}, logged in userId: {} are NOT matching", userId,
 					userProfileDto.getId(), loggedInUserId);
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); // "Cannot modify info of other users"
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 
 		if (userProfileDto.getId() == null) {
@@ -129,6 +142,9 @@ public class UserController {
 		}
 
 		UserProfileDto result = userProfileService.updateAndMapToDto(userProfileDto);
+
+		// TODO: When user is not preset, it is resulting in http status code of 500 instead of 404.
+		// TODO: Handle NoSuchElementException
 
 		return ResponseEntity.ok(result);
 	}
