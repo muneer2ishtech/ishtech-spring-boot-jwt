@@ -28,8 +28,8 @@
 
 	<licenses>
 		<license>
-			<name>0BSD</name>
-			<url>https://opensource.org/license/0bsd/</url>
+			<name>BSD-2-Clause</name>
+			<url>https://opensource.org/license/bsd-2-clause</url>
 		</license>
 	</licenses>
 
