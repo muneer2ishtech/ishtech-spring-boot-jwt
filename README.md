@@ -52,6 +52,10 @@ Spring Boot Auth using JWT - parent project
     - See [CURL-INFO.md](./CURL-INFO.md)
 
 
+## Known Issues
+- See [KNOWN-ISSUES.md](./KNOWN-ISSUES.md)
+
+
 ## Build and Run
 
 - Ensure the port, db properties etc are correct in application-xxx.properties
